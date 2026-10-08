@@ -2,9 +2,6 @@
 
 Un outil qui produit, pour chacune des 20 équipes de Serie A, un rapport d'adversaire complet à partir de **chiffres uniquement** (aucune vidéo). Chaque chiffre est comparé aux 19 autres équipes de la ligue : valeur, moyenne, médiane, rang et percentile.
 
-**Site en ligne : [À COMPLÉTER : lien GitHub Pages]**
-
-![Aperçu du site](docs/apercu.png)
 
 ## Ce que contient un rapport
 
@@ -58,4 +55,4 @@ Les données brutes ne sont pas publiées dans ce dépôt. Le notebook sait les 
 
 ## Auteur
 
-[À COMPLÉTER : ton nom et un lien vers ton profil LinkedIn ou ton portfolio]
+29GRS92
