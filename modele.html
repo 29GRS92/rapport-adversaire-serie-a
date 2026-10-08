@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rapport d'adversaire Serie A 2025/26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Couleurs : on définit tout en variables, puis on redéfinit pour le mode sombre */
+:root{
+  --fond:#e9eef2; --papier:#f6f8fa; --encre:#17212b; --encre-douce:#4d5b69; --trait:#cdd6de;
+  --fort:#1d7a5c; --faible:#bb4128; --style:#4f7396; --case:#d3dce4; --milieu:#17212b;
+  --stack1:#2f5f8f; --stack2:#8db4d6;
+}
+:root[data-theme="dark"]{
+  --fond:#10161c; --papier:#18212a; --encre:#e6edf3; --encre-douce:#9aa9b7; --trait:#2b3742;
+  --fort:#4cc39a; --faible:#f0836a; --style:#86a9cc; --case:#2a3541; --milieu:#e6edf3;
+  --stack1:#6ea3d6; --stack2:#35577a;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --fond:#10161c; --papier:#18212a; --encre:#e6edf3; --encre-douce:#9aa9b7; --trait:#2b3742;
+    --fort:#4cc39a; --faible:#f0836a; --style:#86a9cc; --case:#2a3541; --milieu:#e6edf3;
+    --stack1:#6ea3d6; --stack2:#35577a;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--fond);color:var(--encre);font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:16px;line-height:1.55}
+h1,h2,h3{font-family:"Archivo","Arial Narrow",sans-serif;font-stretch:75%;font-weight:700;letter-spacing:.005em;margin:0}
+.page{max-width:1080px;margin:0 auto;padding:0 16px 64px}
+/* Barre du haut : titre du site, choix de l'équipe, navigation */
+.haut{position:sticky;top:0;z-index:5;background:var(--fond);border-bottom:1px solid var(--trait);padding:12px 0 0}
+.haut-ligne{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
+.site{font-size:14px;color:var(--encre-douce)}
+.choix{display:flex;align-items:center;gap:10px}
+.choix label{font-size:14px;color:var(--encre-douce)}
+select{font:inherit;font-weight:700;color:var(--encre);background:var(--papier);border:1px solid var(--trait);border-radius:6px;padding:8px 36px 8px 12px;min-width:210px}
+nav{display:flex;gap:4px;overflow-x:auto;margin-top:8px;padding-bottom:0}
+nav a{white-space:nowrap;color:var(--encre-douce);text-decoration:none;padding:8px 12px;border-bottom:3px solid transparent;font-size:15px}
+nav a:hover{color:var(--encre)}
+a:focus-visible,select:focus-visible{outline:3px solid var(--style);outline-offset:2px}
+/* Titre de l'équipe */
+.equipe{padding:40px 0 8px}
+.equipe h1{font-size:clamp(48px,9vw,96px);line-height:.95;font-stretch:62%}
+.equipe p{margin:10px 0 0;color:var(--encre-douce);font-size:18px}
+.equipe b{color:var(--encre)}
+section{padding-top:44px}
+h2{font-size:30px;margin-bottom:6px}
+.intro{color:var(--encre-douce);margin:0 0 20px;max-width:64ch}
+/* Notes positives et négatives en deux colonnes */
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.notes h3{font-size:22px;margin-bottom:4px}
+.notes .sous{color:var(--encre-douce);font-size:14px;margin:0 0 12px}
+.notes ul,.style ul{list-style:none;margin:0;padding:0}
+.notes li{padding:12px 0 12px 14px;border-left:4px solid var(--trait);border-bottom:1px solid var(--trait);margin:0}
+.notes .fort li{border-left-color:var(--fort)}
+.notes .faible li{border-left-color:var(--faible)}
+.groupe{font-family:"Archivo","Arial Narrow",sans-serif;font-stretch:80%;font-size:16px;font-weight:600;margin:16px 0 2px;color:var(--encre-douce)}
+.vide{color:var(--encre-douce);font-style:italic;padding:12px 0}
+.style{margin-top:28px}
+.style h3{font-size:20px;margin-bottom:6px}
+.style li{padding:8px 0 8px 14px;border-left:4px solid var(--style);border-bottom:1px solid var(--trait)}
+/* Règles de 20 cases */
+.legende{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;color:var(--encre-douce);margin-bottom:12px}
+.pastille{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.bloc{margin-top:22px}
+.bloc h3{font-size:20px;border-bottom:2px solid var(--encre);padding-bottom:4px}
+.ligne{display:grid;grid-template-columns:minmax(0,1.15fr) 262px 190px;gap:8px 16px;align-items:center;padding:9px 0;border-bottom:1px solid var(--trait)}
+.ligne .nom{font-size:15px}
+.regle{display:flex;gap:2px;align-items:center;position:relative;height:26px}
+.regle i{display:block;flex:1 1 0;height:12px;background:var(--case);border-radius:1px}
+.regle i.moi{height:26px;border-radius:2px}
+.regle i:nth-child(10){margin-right:3px}
+.regle::after{content:"";position:absolute;left:50%;top:-1px;bottom:-1px;width:1px;background:var(--milieu);opacity:.35}
+.val{font-variant-numeric:tabular-nums;font-size:15px}
+.val b{font-family:"Archivo",sans-serif;font-stretch:80%;font-size:20px}
+.val small{color:var(--encre-douce);margin-left:6px}
+.axe{display:flex;justify-content:space-between;width:262px;margin-left:auto;font-size:12px;color:var(--encre-douce)}
+.axe-ligne{display:grid;grid-template-columns:minmax(0,1.15fr) 262px 190px;gap:16px;margin-top:6px}
+/* Joueurs : barres empilées et tableau */
+.barres{margin-top:8px}
+.barre{display:grid;grid-template-columns:200px 1fr 60px;gap:12px;align-items:center;padding:6px 0}
+.barre .piste{background:var(--case);height:16px;border-radius:2px;display:flex;overflow:hidden}
+.barre .piste span:nth-child(1){background:var(--stack1)}
+.barre .piste span:nth-child(2){background:var(--stack2)}
+.barre .t{font-variant-numeric:tabular-nums;text-align:right;font-weight:700}
+.tableau{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.tableau th{font-weight:500;color:var(--encre-douce);text-align:left;padding:8px 8px 8px 0;border-bottom:2px solid var(--encre);font-size:14px}
+.tableau td{padding:8px 8px 8px 0;border-bottom:1px solid var(--trait);vertical-align:middle}
+.tableau td.n,.tableau th.n{text-align:right;font-variant-numeric:tabular-nums}
+.minbar{display:block;height:6px;background:var(--case);border-radius:2px;margin-top:4px;min-width:80px}
+.minbar span{display:block;height:100%;background:var(--style);border-radius:2px}
+.defile{overflow-x:auto}
+.liste-phrases{list-style:none;padding:0;margin:14px 0 0}
+.liste-phrases li{padding:8px 0 8px 14px;border-left:4px solid var(--style);border-bottom:1px solid var(--trait)}
+.sous-titre{font-size:20px;margin:30px 0 4px}
+
+/* Dynamique de la saison */
+.puces{display:flex;gap:6px;margin:6px 0 14px}
+.puces span{width:34px;height:34px;display:grid;place-items:center;border-radius:4px;font-family:"Archivo",sans-serif;font-stretch:80%;font-weight:700;color:#fff}
+.puces .W{background:var(--fort)}.puces .D{background:var(--style)}.puces .L{background:var(--faible)}
+.dyn{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;margin-top:22px}
+.dyn h3{font-size:20px;border-bottom:2px solid var(--encre);padding-bottom:4px;margin-bottom:6px}
+.hb{display:grid;grid-template-columns:170px 1fr 56px;gap:10px;align-items:center;padding:6px 0;font-size:15px}
+.hb .piste{background:var(--case);height:14px;border-radius:2px;overflow:hidden}
+.hb .piste span{display:block;height:100%}
+.hb .t{font-variant-numeric:tabular-nums;text-align:right;font-weight:700}
+.hb small{display:block;color:var(--encre-douce);font-weight:400}
+.mt{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:center;padding:6px 0;font-size:15px}
+.mt .deux{display:grid;gap:3px}
+.mt .deux div{display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums;font-size:13px;color:var(--encre-douce)}
+.mt .deux span{display:block;height:10px;border-radius:2px;min-width:2px}
+.note-chart{font-size:13px;color:var(--encre-douce);margin:8px 0 0}
+@media (max-width:820px){.dyn{grid-template-columns:1fr}.hb{grid-template-columns:120px 1fr 52px}}
+/* Pistes */
+.piste-ligne{display:grid;grid-template-columns:1fr 1fr;gap:8px 28px;padding:14px 0;border-bottom:1px solid var(--trait)}
+.piste-ligne .d{color:var(--encre-douce)}
+.piste-ligne .p{font-weight:500}
+.piste-ligne .p::before{content:"À tester : ";font-weight:700;color:var(--style)}
+.mention{margin-top:56px;padding-top:16px;border-top:1px solid var(--trait);color:var(--encre-douce);font-size:14px;max-width:80ch}
+@media (max-width:820px){
+  .notes{grid-template-columns:1fr}
+  .ligne,.axe-ligne{grid-template-columns:1fr}
+  .regle{width:100%;max-width:300px}
+  .axe{margin-left:0;width:100%;max-width:300px}
+  .barre{grid-template-columns:1fr 70px}
+  .barre .nom{grid-column:1/-1}
+  .piste-ligne{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="haut">
+    <div class="haut-ligne">
+      <div class="site">Rapport d'adversaire, Serie A 2025/26</div>
+      <div class="choix"><label for="choix-equipe">Équipe</label><select id="choix-equipe"></select></div>
+    </div>
+    <nav aria-label="Sections">
+      <a href="#synthese">Synthèse</a><a href="#dynamique">Dynamique</a><a href="#ligue">Place dans la ligue</a><a href="#arrets">Arrêts de jeu</a><a href="#joueurs">Joueurs</a><a href="#surveiller">À surveiller</a><a href="#pistes">Pistes à tester</a>
+    </nav>
+  </header>
+  <main id="contenu"></main>
+  <p class="mention">Méthode : toutes les conclusions sont calculées automatiquement à partir de chiffres de la saison 2025/26 (Sofascore pour les statistiques de match et d'équipe, Understat pour les tirs). Aucune vidéo n'a été analysée. Une équipe "se démarque" quand elle est dans les 5 premières ou les 5 dernières de la ligue sur un indicateur et que son écart avec la moyenne dépasse la moitié de l'écart type de la ligue. Les pistes sont des idées à tester, pas des certitudes.</p>
+</div>
+<script>
+/* Les données des 20 équipes sont injectées ici par le notebook */
+const DONNEES = /*DONNEES*/null;
+
+const choix = document.getElementById('choix-equipe');
+const contenu = document.getElementById('contenu');
+
+/* Petits outils de mise en forme */
+const fr = (x, d=2, m=0) => (x === null || x === undefined || isNaN(x)) ? '–' : Number(x).toLocaleString('fr-FR', {maximumFractionDigits:d, minimumFractionDigits:m});
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rang = r => r === 1 ? '1re' : r + 'e';
+
+/* Une règle de 20 cases : la case colorée est la place de l'équipe, du plus bas (gauche) au plus haut (droite) */
+function regle(r, couleur){
+  const pos = 21 - r;
+  let h = '';
+  for(let i=1;i<=20;i++) h += `<i class="${i===pos?'moi':''}" ${i===pos?`style="background:${couleur}"`:''}></i>`;
+  return `<div class="regle" role="img" aria-label="${rang(r)} valeur la plus haute sur 20">${h}</div>`;
+}
+
+/* Un bloc d'indicateurs avec leur règle */
+function blocIndicateurs(titre, lignes, types, garderPrefixe=false){
+  if(!lignes.length) return '';
+  const rows = lignes.map(l => {
+    const nom = (!garderPrefixe && l.indicateur.includes(' : ')) ? l.indicateur.split(' : ').slice(1).join(' : ') : l.indicateur;
+    const u = l.indicateur.includes('(%)') ? ' %' : '';
+    const t = types[l.indicateur];
+    const couleur = t === 'Point fort' ? 'var(--fort)' : t === 'Point faible' ? 'var(--faible)' : 'var(--style)';
+    return `<div class="ligne"><div class="nom">${esc(nom)}</div>${regle(l['rang (1 = plus haut)'], couleur)}<div class="val"><b>${fr(l['équipe'])}${u}</b><small>ligue ${fr(l['moyenne ligue'])}${u}</small></div></div>`;
+  }).join('');
+  const axe = `<div class="axe-ligne"><span></span><div class="axe"><span>valeur la plus basse</span><span>la plus haute</span></div><span></span></div>`;
+  return `<div class="bloc"><h3>${esc(titre)}</h3>${rows}${axe}</div>`;
+}
+
+
+/* Barres horizontales simples : valeur sur une échelle fixe */
+function barreH(nom, sous, val, max, couleur, texte){
+  return `<div class="hb"><div>${esc(nom)}${sous?`<small>${esc(sous)}</small>`:''}</div><div class="piste"><span style="width:${Math.max(2,100*val/max)}%;background:${couleur}"></span></div><div class="t">${texte}</div></div>`;
+}
+/* Section Dynamique : forme, domicile et extérieur, style, résultats selon l'adversaire, moment des buts */
+function sectionDynamique(h){
+  if(!h) return '';
+  const ph = h.phrases || {};
+  const noms = {domicile:'Domicile', exterieur:'Extérieur'};
+  const lieu = h.lieu.map(l => barreH(noms[l.lieu]||l.lieu, `${fr(l.matchs,0)} matchs, ${fr(l.victoires,0)} V ${fr(l.nuls,0)} N ${fr(l.defaites,0)} D`, l.points_par_match, 3, 'var(--style)', fr(l.points_par_match))).join('');
+  const stNoms = {'pressing haut':'Pressing haut','pressing median':'Pressing médian','bloc bas':'Bloc bas'};
+  const sel = h.selon_adversaire.map(l => barreH(stNoms[l.style_adversaire]||l.style_adversaire, `${fr(l.matchs,0)} matchs`, l.points_par_match, 3, 'var(--style)', fr(l.points_par_match))).join('');
+  const mt = h.moment_buts; const maxB = Math.max(...mt.map(x=>Math.max(x.buts_marques,x.buts_encaisses)),1);
+  const moments = mt.map(x => `<div class="mt"><div>${esc(x.tranche)}</div><div class="deux"><div><span style="width:${100*x.buts_marques/maxB*0.8}%;background:var(--fort)"></span>${fr(x.buts_marques,0)}</div><div><span style="width:${100*x.buts_encaisses/maxB*0.8}%;background:var(--faible)"></span>${fr(x.buts_encaisses,0)}</div></div></div>`).join('');
+  const f = h.forme;
+  const seq = f.sequence.map(x => `<span class="${x}" title="${x==='W'?'Victoire':x==='D'?'Nul':'Défaite'}">${x==='W'?'V':x==='D'?'N':'D'}</span>`).join('');
+  const lib = [['points_par_match','Points par match'],['buts_marques_par_match','Buts marqués par match'],['buts_encaisses_par_match','Buts encaissés par match']];
+  const formeBarres = `<table class="tableau"><thead><tr><th></th><th class="n">${f.n} derniers</th><th class="n">Saison</th></tr></thead><tbody>${lib.map(([k,n]) => `<tr><td>${n}</td><td class="n"><b>${fr(f.recent[k])}</b></td><td class="n">${fr(f.saison[k])}</td></tr>`).join('')}</tbody></table>`;
+  const phrases = ['style','forme','domicile_exterieur','selon_adversaire','moment_des_buts'].filter(k=>ph[k]).map(k=>`<li>${esc(ph[k])}</li>`).join('');
+  return `<section id="dynamique"><h2>Dynamique de la saison</h2>
+    <p class="intro">Style de jeu, forme récente, lieu et moment des buts. Les phrases sont calculées à partir des résultats et des tirs de la saison.</p>
+    <ul class="liste-phrases">${phrases}</ul>
+    <div class="dyn">
+      <div><h3>Forme récente</h3><div class="puces" role="img" aria-label="Séquence des ${f.n} derniers matchs">${seq}</div>
+        <p class="note-chart">Du plus ancien au plus récent.</p>${formeBarres}</div>
+      <div><h3>Domicile et extérieur</h3>${lieu}<p class="note-chart">Points par match, sur une échelle de 0 à 3.</p></div>
+      <div><h3>Selon le style de l'adversaire</h3>${sel}<p class="note-chart">Style d'après le pressing de l'adversaire sur la saison (PPDA). Points par match, de 0 à 3.</p></div>
+      <div><h3>Moment des buts</h3>${moments}<div class="legende" style="margin-top:8px"><span><span class="pastille" style="background:var(--fort)"></span>marqués</span><span><span class="pastille" style="background:var(--faible)"></span>encaissés</span></div><p class="note-chart">La minute inclut les arrêts de jeu de la première mi-temps dans la tranche 46 à 60.</p></div>
+    </div></section>`;
+}
+
+function dessiner(nomEquipe){
+  const r = DONNEES[nomEquipe];
+  if(!r){ contenu.innerHTML = '<p class="vide">Équipe introuvable.</p>'; return; }
+  document.title = `${r.equipe} : rapport d'adversaire Serie A 2025/26`;
+  const types = {};
+  r.conclusions_ligue.forEach(c => types[c.indicateur] = c.type);
+  const forts = r.conclusions_ligue.filter(c => c.type === 'Point fort');
+  const faibles = r.conclusions_ligue.filter(c => c.type === 'Point faible');
+  const styles = r.conclusions_ligue.filter(c => c.type === 'Style');
+  const nomsBloc = {Style:'Style de jeu', Attaque:'Phase offensive', Défense:'Phase défensive', Discipline:'Discipline', Subi:'Ce que l\'équipe concède'};
+  const ordreBloc = ['Attaque','Défense','Subi','Discipline','Style'];
+  /* Retire le préfixe du bloc (ex : "Attaque : ") quand le titre du groupe l'affiche déjà */
+  const sansBloc = (t, groupe) => { if(!groupe) return t; const m = t.replace(/^[^:]+ : /, ''); return m.startsWith('xG') ? m : m.charAt(0).toUpperCase() + m.slice(1); };
+  /* Liste de notes regroupées par bloc, avec un petit titre quand il y a plusieurs groupes */
+  const liste = (a, vide) => {
+    if(!a.length) return `<div class="vide">${vide}</div>`;
+    const g = {};
+    a.forEach(c => { const b = c.indicateur.split(' : ')[0]; (g[b] = g[b] || []).push(c); });
+    const cles = ordreBloc.filter(b => g[b]).concat(Object.keys(g).filter(b => !ordreBloc.includes(b)));
+    return cles.map(b => `<h4 class="groupe">${esc(nomsBloc[b]||b)}</h4><ul>${g[b].map(c=>`<li>${esc(sansBloc(c.texte, true))}</li>`).join('')}</ul>`).join('');
+  };
+
+  /* Blocs de la comparaison avec la ligue */
+  const ordre = ['Style','Attaque','Défense','Discipline','Subi'];
+  const titres = {Style:'Style de jeu', Attaque:'Phase offensive', Défense:'Phase défensive', Discipline:'Discipline', Subi:'Ce que l\'équipe concède'};
+  const groupes = {};
+  r.comparaison_ligue.forEach(l => { const g = l.indicateur.split(' : ')[0]; (groupes[g] = groupes[g] || []).push(l); });
+  const blocs = ordre.filter(g => groupes[g]).map(g => blocIndicateurs(titres[g], groupes[g], types)).join('');
+
+  /* Coups de pied arrêtés */
+  const arrets = blocIndicateurs('Totaux sur la saison', r.coups_de_pied_arretes, {}, true);
+
+  /* Joueurs dangereux : barres empilées */
+  const jd = r.joueurs_dangereux.slice(0, 10);
+  const maxM = Math.max(...jd.map(j => (j.xG_hp||0) + (j.xG_crees||0)), 0.1);
+  const barres = jd.map(j => {
+    const a = j.xG_hp||0, b = j.xG_crees||0;
+    return `<div class="barre"><div class="nom">${esc(j.player)}</div><div class="piste"><span style="width:${100*a/maxM}%"></span><span style="width:${100*b/maxM}%"></span></div><div class="t">${fr(a+b,1,1)}</div></div>`;
+  }).join('');
+
+  /* Effectif */
+  const lignesEff = r.effectif.slice().sort((x,y)=>y.minutes-x.minutes).map(j =>
+    `<tr><td>${esc(j.joueur)}</td><td>${esc(j.poste)}</td><td class="n">${fr(j.minutes,0)}<span class="minbar"><span style="width:${Math.min(100,100*j.part_minutes)}%"></span></span></td><td>${esc(j.role)}</td><td class="n">${fr(j.titularisations,0)} sur ${fr(j.matchs,0)}</td><td class="n">${j.menace_90===null?'–':fr(j.menace_90)}</td></tr>`).join('');
+
+  const surv = r.a_surveiller.map(b => `<h3 class="sous-titre">${esc(b.titre)}</h3>` + (b.phrases.length ? `<ul class="liste-phrases">${b.phrases.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>` : '<div class="vide">Aucun joueur ne remplit ce critère.</div>')).join('');
+
+  const pistes = r.pistes.map(p => `<div class="piste-ligne"><div class="d">${esc(p.donnee)}</div><div class="p">${esc(p.piste)}</div></div>`).join('');
+
+  contenu.innerHTML = `
+  <div class="equipe"><h1>${esc(r.equipe)}</h1><p><b>${rang(r.classement)} du classement</b> avec ${r.points} points sur la saison 2025/26.</p></div>
+
+  <section id="synthese"><h2>Synthèse</h2>
+    <p class="intro">Les points à respecter sont les indicateurs où l'équipe est parmi les meilleures de la ligue. Les points à exploiter sont ceux où elle est parmi les moins bonnes.</p>
+    <div class="notes">
+      <div class="fort"><h3>Points positifs</h3><p class="sous">À respecter</p>${liste(forts, 'Aucun indicateur ne place cette équipe dans le haut de la ligue.')}</div>
+      <div class="faible"><h3>Points négatifs</h3><p class="sous">À exploiter</p>${liste(faibles, 'Aucun indicateur ne place cette équipe dans le bas de la ligue.')}</div>
+    </div>
+    <div class="style"><h3>Style de jeu</h3>${liste(styles, 'Aucune particularité de style marquée.')}</div>
+  </section>
+
+  ${sectionDynamique(r.historique)}
+
+  <section id="ligue"><h2>Place dans la ligue</h2>
+    <p class="intro">Chaque règle compte 20 cases, une par équipe de Serie A. La case colorée est la place de l'équipe sur l'indicateur. La ligne verticale marque le milieu de la ligue.</p>
+    <div class="legende"><span><span class="pastille" style="background:var(--fort)"></span>point positif</span><span><span class="pastille" style="background:var(--faible)"></span>point négatif</span><span><span class="pastille" style="background:var(--style)"></span>style ou écart faible</span></div>
+    ${blocs}
+  </section>
+
+  <section id="arrets"><h2>Arrêts de jeu</h2>
+    <p class="intro">Corners, coups francs directs et penaltys, pour et contre. Ce sont des totaux sur 38 matchs : les petits nombres bougent vite, il faut les lire avec prudence.</p>
+    ${arrets}
+  </section>
+
+  <section id="joueurs"><h2>Joueurs</h2>
+    <p class="intro">Menace offensive cumulée sur la saison : tirs hors penalty (foncé) et tirs provoqués par une passe (clair), en xG.</p>
+    <div class="legende"><span><span class="pastille" style="background:var(--stack1)"></span>ses tirs</span><span><span class="pastille" style="background:var(--stack2)"></span>tirs qu'il a provoqués</span></div>
+    <div class="barres">${barres}</div>
+    <ul class="liste-phrases">${r.phrases_joueurs.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>
+    <h3 class="sous-titre">Effectif et utilisation</h3>
+    <div class="defile"><table class="tableau"><thead><tr><th>Joueur</th><th>Poste</th><th class="n">Minutes</th><th>Rôle</th><th class="n">Titulaire</th><th class="n">Menace par 90 min</th></tr></thead><tbody>${lignesEff}</tbody></table></div>
+  </section>
+
+  <section id="surveiller"><h2>À surveiller</h2>${surv}</section>
+
+  <section id="pistes"><h2>Pistes à tester</h2>
+    <p class="intro">Chaque piste part d'un chiffre de la saison. Elle indique où chercher, pas ce qui va se passer.</p>
+    ${pistes}
+  </section>`;
+}
+
+/* Remplit le menu avec les équipes classées par place, puis affiche l'équipe choisie (adresse de la page comprise) */
+const noms = Object.keys(DONNEES).sort((a,b)=>DONNEES[a].classement-DONNEES[b].classement);
+noms.forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = `${DONNEES[n].classement}. ${n}`; choix.appendChild(o); });
+const depart = new URLSearchParams(location.search).get('equipe');
+choix.value = noms.includes(depart) ? depart : noms[0];
+dessiner(choix.value);
+choix.addEventListener('change', () => { history.replaceState(null, '', '?equipe=' + encodeURIComponent(choix.value)); dessiner(choix.value); window.scrollTo(0,0); });
+</script>
+</body>
+</html>
