@@ -2,6 +2,7 @@
 
 Un outil qui produit, pour chacune des 20 équipes de Serie A, un rapport d'adversaire complet à partir de **chiffres uniquement** (aucune vidéo). Chaque chiffre est comparé aux 19 autres équipes de la ligue : valeur, moyenne, médiane, rang et percentile.
 
+**Site en ligne : https://29grs92.github.io/rapport-adversaire-serie-a**
 
 ## Ce que contient un rapport
 
