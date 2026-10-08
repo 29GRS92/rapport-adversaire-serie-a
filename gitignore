@@ -1,0 +1,9 @@
+# données brutes téléchargées (volumineuses, et reconstruites par le notebook)
+data/raw/
+
+# fichiers intermédiaires (reconstruits par le notebook)
+data/processed/*.csv
+
+# fichiers temporaires de Jupyter et de Python
+.ipynb_checkpoints/
+__pycache__/
